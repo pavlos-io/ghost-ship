@@ -121,7 +121,7 @@ def _run_claude_in_sandbox(container, job: dict) -> str:
         f"timeout --signal=KILL 600 claude -p {_shell_quote(user_prompt)} "
         f"--output-format json "
         f"--dangerously-skip-permissions " # TODO: maybe give more narrow perms?
-        f"--max-turns 50 "
+        f"--max-turns 50 " # https://claudelog.com/faqs/what-is-max-turns-in-claude-code/
         f"--append-system-prompt-file /tmp/system-prompt.txt"
     )
 
