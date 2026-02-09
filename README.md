@@ -1,4 +1,4 @@
-# llenv — Slack-Native Agent Sandbox
+# ghost-ship — Slack-Native Agent Sandbox
 
 A proof-of-concept that wires up: **Slack mention → Redis queue → Docker sandbox → result posted back to Slack**.
 
