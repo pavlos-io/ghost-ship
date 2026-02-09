@@ -1,0 +1,4 @@
+slack-bolt
+redis
+docker
+python-dotenv
