@@ -2,3 +2,6 @@ slack-bolt
 redis
 docker
 python-dotenv
+requests
+typer
+pyright

@@ -1,4 +1,4 @@
-.PHONY: build smoke smoke-gh up app worker dev logs
+.PHONY: build smoke smoke-gh up app worker cli dev logs test lint
 
 build:
 	docker build -f Dockerfile.sandbox -t agent-sandbox:latest .
@@ -16,14 +16,23 @@ app:
 	uv run src/app.py
 
 worker:
-	uv run src/worker.py
+	uv run src/worker.py fake
+
+cli:
+	uv run src/worker.py cli "$(PROMPT)" $(if $(REPO),--repo=$(REPO)) $(if $(MODEL_PROVIDER),--model-provider=$(MODEL_PROVIDER))
 
 dev:
 	docker compose up -d
 	trap 'docker compose down; kill 0' EXIT; \
 	uv run src/app.py & \
-	uv run src/worker.py & \
+	uv run src/worker.py slack & \
 	wait
 
 logs:
 	tail -f logs/app.log logs/worker.log
+
+test:
+	python -m pytest tests/ -v
+
+lint:
+	pyright

@@ -14,6 +14,14 @@ RUN curl -fsSL https://claude.ai/install.sh | bash; \
     cp /root/.local/bin/claude /usr/local/bin/claude && chmod +x /usr/local/bin/claude
 ENV DISABLE_AUTOUPDATER=1
 
+# Install Node.js (required by Codex CLI)
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && \
+    apt-get install -y nodejs && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install Codex CLI
+RUN npm install -g @openai/codex
+
 # Create non-root user (claude CLI refuses --dangerously-skip-permissions as root)
 RUN useradd -m -s /bin/bash sandbox
 RUN mkdir -p /workspace && chown sandbox:sandbox /workspace
